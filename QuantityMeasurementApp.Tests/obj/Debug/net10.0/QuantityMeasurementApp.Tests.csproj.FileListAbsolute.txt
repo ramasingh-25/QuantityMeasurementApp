@@ -269,3 +269,4 @@ D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\obj\Debug\net10.0\refint\
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\obj\Debug\net10.0\QuantityMeasurementApp.Tests.pdb
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\obj\Debug\net10.0\QuantityMeasurementApp.Tests.genruntimeconfig.cache
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\obj\Debug\net10.0\ref\QuantityMeasurementApp.Tests.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\obj\Debug\net10.0\QuantityMeasurementApp.Tests.sourcelink.json
