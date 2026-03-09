@@ -3,9 +3,7 @@ using System;
 namespace QuantityMeasurementApp.Model;
 
 public class Quantity
-
-   
- {
+{
     private readonly double value;
     private readonly Unit unit;
 
@@ -74,4 +72,3 @@ public class Quantity
     }
 
 }
-
