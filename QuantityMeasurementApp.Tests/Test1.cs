@@ -107,7 +107,7 @@ namespace QuantityMeasurementApp.Tests
             Assert.AreEqual(-12.0, result, 0.000001);
         }
 
-        
+        //Testing conversion of a value from one unit to the same unit should return the original value
         [TestMethod]
         public void TestConversion_ZeroValue()
         {
@@ -115,25 +115,28 @@ namespace QuantityMeasurementApp.Tests
             Assert.AreEqual(0.0, result, 0.000001);
         }
 
-        
+        //Testing conversion of a value from one unit to the same unit should return the original value
         [TestMethod]
         public void TestConversion_CentimeterToInch()
         {
             double result = Quantity.Convert(2.54, Unit.CENTIMETER, Unit.INCH);
             Assert.AreEqual(1.0, result, 0.0001);
         }
+        //Testing conversion of a value from one unit to the same unit should return the original value
         [TestMethod]
         public void TestConversion_YardsToFeet()
         {
             double result = Quantity.Convert(3.0, Unit.YARD, Unit.FEET);
             Assert.AreEqual(9.0, result, 0.000001);
         }
+        //Testing conversion of a value from one unit to the same unit should return the original value
         [TestMethod]
         public void TestConversion_InchesToFeet()
         {
             double result = Quantity.Convert(24.0, Unit.INCH, Unit.FEET);
             Assert.AreEqual(2.0, result, 0.000001);
         }
+        //Testing conversion of a value from one unit to the same unit should return the original value
         [TestMethod]
         public void TestConversion_FeetToInches()
         {
@@ -141,6 +144,7 @@ namespace QuantityMeasurementApp.Tests
             Assert.AreEqual(12.0, result, 0.000001);
         }
 
+        //Testing addition of two lengths where one operand is null
         [TestMethod]
         public void TestAddition_NullSecondOperand()
         {
@@ -167,6 +171,7 @@ namespace QuantityMeasurementApp.Tests
 
             Assert.IsTrue(result.Equals(new Quantity(3.0, Unit.FEET)));
         }
+        //Testing addition of zero to a length
         [TestMethod]
         public void TestAddition_WithZero()
         {

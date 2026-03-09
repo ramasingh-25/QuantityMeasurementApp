@@ -1,38 +1,37 @@
 namespace QuantityMeasurementApp.Model
 {
-     public class QuantityLength
+     public enum Unit
     {
-        private readonly double value;
-        private readonly LengthUnit unit;
+        FEET,
+        INCH,
+        YARD,
+        CENTIMETER
+    }
 
-        public QuantityLength(double value, LengthUnit unit)
+    public static class UnitExtensions
+    {
+        public static double ConvertToBaseUnit(this Unit unit, double value)
         {
-            this.value = value;
-            this.unit = unit;
+            return unit switch
+            {
+                Unit.FEET => value,
+                Unit.INCH => value / 12,
+                Unit.YARD => value * 3,
+                Unit.CENTIMETER => value / 30.48,
+                _ => throw new ArgumentException("Invalid unit")
+            };
         }
 
-        private double ConvertToFeet()
+        public static double ConvertFromBaseUnit(this Unit unit, double baseValue)
         {
-            if (unit == LengthUnit.Feet)
-                return value;
-            if (unit == LengthUnit.Inch)
-                return value / 12;
-            throw new ArgumentException("Invalid unit");
-        }
-        public override bool Equals(object obj)
-        {
-            if (obj == null)return false;
-            if (this == obj)return true;
-            if (!(obj is QuantityLength))return false;
-            QuantityLength other = (QuantityLength)obj;
-            double thisInFeet = this.ConvertToFeet();
-            double otherInFeet = other.ConvertToFeet();
-            return thisInFeet == otherInFeet;
-        }
-
-        public override int GetHashCode()
-        {
-            return ConvertToFeet().GetHashCode();
+            return unit switch
+            {
+                Unit.FEET => baseValue,
+                Unit.INCH => baseValue * 12,
+                Unit.YARD => baseValue / 3,
+                Unit.CENTIMETER => baseValue * 30.48,
+                _ => throw new ArgumentException("Invalid unit")
+            };
         }
     }
 }
