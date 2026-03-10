@@ -2,15 +2,15 @@ using System;
 
 namespace QuantityMeasurementApp.Model
 {
-    public class QuantityWeight
+    public class Quantity<U> where U : Enum
     {
         private readonly double value;
-        private readonly WeightUnit unit;
+        private readonly U unit;
 
         public double Value => value;
-        public WeightUnit Unit => unit;
+        public U Unit => unit;
 
-        public QuantityWeight(double value, WeightUnit unit)
+        public Quantity(double value, U unit)
         {
             if (Double.IsNaN(value) || Double.IsInfinity(value))
                 throw new ArgumentException("Value must be finite number.");
@@ -23,16 +23,16 @@ namespace QuantityMeasurementApp.Model
             return unit.ConvertToBaseUnit(value);
         }
 
-        public static double Convert(double value, WeightUnit source, WeightUnit target)
+        public static double Convert(double value, U source, U target)
         {
-            if (source == target)
+            if (source.Equals(target))
                 return value;
 
             double baseValue = source.ConvertToBaseUnit(value);
             return target.ConvertFromBaseUnit(baseValue);
         }
 
-        public QuantityWeight Add(QuantityWeight other)
+        public Quantity<U> Add(Quantity<U> other)
         {
             if (other == null)
                 throw new ArgumentException("Second operand cannot be null");
@@ -42,23 +42,24 @@ namespace QuantityMeasurementApp.Model
             double sumInBase = thisInBase + otherInBase;
             double resultValue = this.unit.ConvertFromBaseUnit(sumInBase);
 
-            return new QuantityWeight(resultValue, this.unit);
+            return new Quantity<U>(resultValue, this.unit);
         }
 
-        public static QuantityWeight Add(QuantityWeight w1, QuantityWeight w2)
+        public static Quantity<U> Add(Quantity<U> q1, Quantity<U> q2)
         {
-            if (w1 == null || w2 == null)
+            if (q1 == null || q2 == null)
                 throw new ArgumentException("Operands cannot be null");
 
-            return w1.Add(w2);
+            return q1.Add(q2);
         }
 
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
             if (this == obj) return true;
-            if (!(obj is QuantityWeight)) return false;
-            QuantityWeight other = (QuantityWeight)obj;
+            if (!(obj is Quantity<U>)) return false;
+            Quantity<U> other = (Quantity<U>)obj;
+            if (this.unit.GetType() != other.unit.GetType()) return false;
             double thisInBase = this.ConvertToBaseUnit();
             double otherInBase = other.ConvertToBaseUnit();
             return Math.Abs(thisInBase - otherInBase) < 0.000001;
