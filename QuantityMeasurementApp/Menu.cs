@@ -8,7 +8,8 @@ namespace QuantityMeasurementApp;
     {
         public static void StartApp()
         {
-          try
+         
+            try
             {
                 Console.WriteLine("Select measurement type (LENGTH / WEIGHT / VOLUME):");
                 string type = Console.ReadLine().ToUpper();
