@@ -1,40 +1,22 @@
 using System;
-using Microsoft.Extensions.DependencyInjection;
 using QuantityMeasurementBusinessLayer.Interfaces;
 using QuantityMeasurementBusinessLayer.Services;
+using QuantityMeasurementModelLayer.DTO;
 using QuantityMeasurementRepositoryLayer.Interfaces;
 using QuantityMeasurementRepositoryLayer.Repositories;
-using QuantityMeasurementModelLayer.DTO;
-using QuantityMeasurementConsoleApp.Interface;
+using QuantityMeasurementConsoleApp.Interfaces;
+
+namespace QuantityMeasurementConsoleApp.Services;
 
 public class Menu : IMenu
 {
     private readonly IQuantityMeasurementService service;
+    private readonly IQuantityMeasurementRepository repository;
 
     public Menu()
     {
-        this.service = ConfigureServices();
-    }
-
-    public Menu(IQuantityMeasurementService service)
-    {
-        this.service = service;
-    }
-
-    private IQuantityMeasurementService ConfigureServices()
-    {
-        var provider = new ServiceCollection()
-            .AddSingleton<IQuantityMeasurementRepository, QuantityMeasurementCacheRepository>()
-            .AddScoped<IQuantityMeasurementService, QuantityMeasurementServiceImpl>()
-            .BuildServiceProvider();
-
-        var service = provider.GetService<IQuantityMeasurementService>();
-        if (service == null)
-        {
-            throw new InvalidOperationException("Failed to configure IQuantityMeasurementService");
-        }
-        
-        return service;
+        repository = new QuantityMeasurementCacheRepository();
+        service = new QuantityMeasurementServiceImpl(repository);
     }
 
     public void Start()
@@ -43,40 +25,35 @@ public class Menu : IMenu
         {
             try
             {
-                ClearScreen();
-                DisplayMainMenu();
-                int type = GetUserChoice();
+                Console.WriteLine("\n===== Quantity Measurement System =====");
+                Console.WriteLine("1 Length");
+                Console.WriteLine("2 Volume");
+                Console.WriteLine("3 Weight");
+                Console.WriteLine("4 Temperature");
+                Console.WriteLine("5 Show Records");
+                Console.WriteLine("6 Exit");
+
+                Console.Write("Enter choice: ");
+                int type = Convert.ToInt32(Console.ReadLine());
+
+                if (type == 6) return;
 
                 if (type == 5)
-                    return;
+                {
+                    ShowAllData();
+                    continue;
+                }
 
-                ProcessMeasurementType(type);
+                OperationMenu(type);
             }
             catch (Exception ex)
             {
-                DisplayError(ex.Message);
-                WaitForUserInput();
+                Console.WriteLine("Error: " + ex.Message);
             }
         }
     }
 
-    // IMenu Interface Implementation
-    public void DisplayMainMenu()
-    {
-        Console.WriteLine("\n===== Quantity Measurement System =====");
-        DisplayMeasurementTypeMenu();
-    }
-
-    public void DisplayMeasurementTypeMenu()
-    {
-        Console.WriteLine("1 Length");
-        Console.WriteLine("2 Volume");
-        Console.WriteLine("3 Weight");
-        Console.WriteLine("4 Temperature");
-        Console.WriteLine("5 Exit");
-    }
-
-    public void DisplayOperationMenu()
+    private void OperationMenu(int type)
     {
         Console.WriteLine("\nSelect Operation");
         Console.WriteLine("1 Add");
@@ -84,179 +61,114 @@ public class Menu : IMenu
         Console.WriteLine("3 Divide");
         Console.WriteLine("4 Compare");
         Console.WriteLine("5 Convert");
-    }
 
-    public int GetUserChoice()
-    {
-        Console.Write("Enter choice: ");
-        return Convert.ToInt32(Console.ReadLine());
-    }
+        Console.Write("Enter Operation: ");
+        int operation = Convert.ToInt32(Console.ReadLine());
 
-    public void DisplayResult(string result)
-    {
-        Console.WriteLine($"\nResult = {result}");
-    }
-
-    public void DisplayError(string error)
-    {
-        Console.WriteLine($"Error: {error}");
-    }
-
-    public void WaitForUserInput()
-    {
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
-    }
-
-    public void ClearScreen()
-    {
-        Console.Clear();
-    }
-
-    // -------- BUSINESS LOGIC --------
-
-    private void ProcessMeasurementType(int type)
-    {
-        DisplayOperationMenu();
-        int operation = GetOperationChoice();
-
-        QuantityDTO q1 = GetQuantity(type);
+        QuantityDTO firstValue = GetQuantity(type);
 
         if (operation == 5)
         {
-            ConvertUnit(q1, type);
+            ConvertUnit(firstValue, type);
             return;
         }
 
-        QuantityDTO q2 = GetQuantity(type);
+        QuantityDTO secondValue = GetQuantity(type);
 
         switch (operation)
         {
             case 1:
-                var addResult = service.Add(q1, q2);
-                DisplayResult($"{addResult.Value} {addResult.Unit}");
+                PrintResult(service.Add(firstValue, secondValue));
                 break;
-
             case 2:
-                var subtractResult = service.Subtract(q1, q2);
-                DisplayResult($"{subtractResult.Value} {subtractResult.Unit}");
+                PrintResult(service.Subtract(firstValue, secondValue));
                 break;
-
             case 3:
-                double divideResult = service.Divide(q1, q2);
-                DisplayResult(divideResult.ToString());
+                Console.WriteLine("Result = " + service.Divide(firstValue, secondValue));
                 break;
-
             case 4:
-                bool compareResult = service.Compare(q1, q2);
-                DisplayResult($"Are Equal = {compareResult}");
+                Console.WriteLine("Are Equal = " + service.Compare(firstValue, secondValue));
                 break;
-
             default:
-                DisplayError("Invalid Operation");
+                Console.WriteLine("Invalid Operation");
                 break;
         }
-        
-        WaitForUserInput();
     }
-
-    private int GetOperationChoice()
-    {
-        Console.Write("Enter Operation: ");
-        return Convert.ToInt32(Console.ReadLine());
-    }
-
-    // -------- INPUT --------
 
     private QuantityDTO GetQuantity(int type)
     {
         Console.Write("\nEnter Value: ");
         double value = Convert.ToDouble(Console.ReadLine());
-
         string unit = SelectUnit(type);
-
         return new QuantityDTO(value, unit);
     }
-
-    // -------- UNIT MENU --------
 
     private string SelectUnit(int type)
     {
         Console.WriteLine("Select Unit");
 
-        if (type == 1) // Length
+        if (type == 1)
         {
-            Console.WriteLine("1 FEET");
-            Console.WriteLine("2 INCHES");
-            Console.WriteLine("3 YARDS");
-            Console.WriteLine("4 CENTIMETERS");
-
-            int choice = Convert.ToInt32(Console.ReadLine());
-
-            return choice switch
+            Console.WriteLine("1 FEET\n2 INCHES\n3 YARDS\n4 CENTIMETERS");
+            return Convert.ToInt32(Console.ReadLine()) switch
             {
-                1 => "FEET",
-                2 => "INCHES",
-                3 => "YARDS",
-                4 => "CENTIMETERS",
-                _ => "FEET"
+                1 => "FEET", 2 => "INCHES", 3 => "YARDS", 4 => "CENTIMETERS", _ => "FEET"
             };
         }
-        else if (type == 2) // Volume
+        else if (type == 2)
         {
-            Console.WriteLine("1 LITRE");
-            Console.WriteLine("2 MILLILITRE");
-            Console.WriteLine("3 GALLON");
-
-            int choice = Convert.ToInt32(Console.ReadLine());
-
-            return choice switch
+            Console.WriteLine("1 LITRE\n2 MILLILITRE\n3 GALLON");
+            return Convert.ToInt32(Console.ReadLine()) switch
             {
-                1 => "LITRE",
-                2 => "MILLILITRE",
-                3 => "GALLON",
-                _ => "LITRE"
+                1 => "LITRE", 2 => "MILLILITRE", 3 => "GALLON", _ => "LITRE"
             };
         }
-        else if (type == 3) // Weight
+        else if (type == 3)
         {
-            Console.WriteLine("1 KILOGRAM");
-            Console.WriteLine("2 GRAM");
-            Console.WriteLine("3 POUND");
-
-            int choice = Convert.ToInt32(Console.ReadLine());
-
-            return choice switch
+            Console.WriteLine("1 KILOGRAM\n2 GRAM\n3 POUND");
+            return Convert.ToInt32(Console.ReadLine()) switch
             {
-                1 => "KILOGRAM",
-                2 => "GRAM",
-                3 => "POUND",
-                _ => "KILOGRAM"
+                1 => "KILOGRAM", 2 => "GRAM", 3 => "POUND", _ => "KILOGRAM"
             };
         }
-        else // Temperature
+        else
         {
-            Console.WriteLine("1 CELSIUS");
-            Console.WriteLine("2 FAHRENHEIT");
-
-            int choice = Convert.ToInt32(Console.ReadLine());
-
-            return choice switch
+            Console.WriteLine("1 CELSIUS\n2 FAHRENHEIT");
+            return Convert.ToInt32(Console.ReadLine()) switch
             {
-                1 => "CELSIUS",
-                2 => "FAHRENHEIT",
-                _ => "CELSIUS"
+                1 => "CELSIUS", 2 => "FAHRENHEIT", _ => "CELSIUS"
             };
         }
     }
 
-    // -------- CONVERT --------
-
-    private void ConvertUnit(QuantityDTO q1, int type)
+    private void ConvertUnit(QuantityDTO firstValue, int type)
     {
         Console.WriteLine("\nSelect Target Unit");
         string targetUnit = SelectUnit(type);
-        QuantityDTO result = service.Convert(q1, targetUnit);
-        DisplayResult($"{result.Value} {result.Unit}");
+        PrintResult(service.Convert(firstValue, targetUnit));
+    }
+
+    private void PrintResult(QuantityDTO result)
+    {
+        Console.WriteLine($"\nResult = {result.Value} {result.Unit}");
+    }
+
+    private void ShowAllData()
+    {
+        var list = repository.GetAll();
+
+        Console.WriteLine("\n===== STORED RECORDS =====");
+        foreach (var item in list)
+        {
+            Console.WriteLine(
+                $"Id: {item.Id} | " +
+                $"FirstValue: {item.FirstValue} {item.FirstUnit} | " +
+                $"SecondValue: {item.SecondValue} {item.SecondUnit} | " +
+                $"Operation: {item.Operation} | " +
+                $"Result: {item.Result} | " +
+                $"Type: {item.MeasurementType}"
+            );
+        }
+        Console.WriteLine("==========================\n");
     }
 }

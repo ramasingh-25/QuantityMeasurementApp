@@ -1,6 +1,9 @@
 using System;
 using QuantityMeasurementModelLayer.Enums;
-namespace QuantityMeasurementApp.Model;
+using QuantityMeasurementModelLayer.Models;
+using QuantityMeasurementModelLayer.Extensions;
+
+namespace QuantityMeasurementModelLayer.Models;
     public class QuantityLength
     {
         private readonly double value;

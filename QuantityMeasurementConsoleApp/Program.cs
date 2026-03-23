@@ -1,8 +1,5 @@
-﻿using QuantityMeasurementBusinessLayer.Interfaces;
-using QuantityMeasurementBusinessLayer.Services;
-using QuantityMeasurementRepositoryLayer.Interfaces;
-using QuantityMeasurementRepositoryLayer.Repositories;
-using QuantityMeasurementConsoleApp.Interface;
+using QuantityMeasurementConsoleApp.Interfaces;
+using QuantityMeasurementConsoleApp.Services;
 
 class Program
 {

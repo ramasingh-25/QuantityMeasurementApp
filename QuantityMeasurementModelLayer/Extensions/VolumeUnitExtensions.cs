@@ -1,5 +1,6 @@
-using System;
 using QuantityMeasurementModelLayer.Enums;
+
+namespace QuantityMeasurementModelLayer.Extensions;
 
 public static class VolumeUnitExtensions
 {
@@ -55,5 +56,10 @@ public static class VolumeUnitExtensions
             default:
                 throw new ArgumentException("Invalid Volume Unit");
         }
+    }
+
+    public static double FromBaseUnit(this VolumeUnit unit, double baseValue)
+    {
+        return ConvertFromBaseUnit(unit, baseValue);
     }
 }
