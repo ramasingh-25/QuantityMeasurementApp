@@ -1,5 +1,3 @@
-using System;
-
 namespace QuantityMeasurementModelLayer.Exceptions;
     public class UnsupportedOperationException : Exception
     {
