@@ -3,7 +3,6 @@ D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\.msCover
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\testhost.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.TestPlatform.AdapterUtilities.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\testhost.exe
-D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\appsettings.json
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\MSTest.TestAdapter.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\MSTestAdapter.PlatformServices.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\QuantityMeasurementApp.Tests.deps.json
@@ -12,12 +11,15 @@ D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Quantity
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\QuantityMeasurementApp.Tests.pdb
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Azure.Core.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Azure.Identity.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\BCrypt.Net-Next.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.ApplicationInsights.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Bcl.Cryptography.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Data.SqlClient.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.DiaSymReader.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.InMemory.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
@@ -25,7 +27,7 @@ D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsof
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.FileExtensions.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Json.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
@@ -76,9 +78,9 @@ D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\Pipeline
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\StackExchange.Redis.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.ClientModel.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
-D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Diagnostics.EventLog.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.IO.Hashing.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Memory.Data.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Security.Cryptography.Pkcs.dll
 D:\QuantityMeasurementApp\QuantityMeasurementApp.Tests\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll

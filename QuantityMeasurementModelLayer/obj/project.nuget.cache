@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "DDhVxl+IoRw=",
+  "dgSpecHash": "cZGhZhjnJp4=",
   "success": true,
   "projectFilePath": "D:\\QuantityMeasurementApp\\QuantityMeasurementModelLayer\\QuantityMeasurementModelLayer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\talkt\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
+    "C:\\Users\\talkt\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.12\\microsoft.netcore.app.ref.9.0.12.nupkg.sha512",
+    "C:\\Users\\talkt\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.12\\microsoft.windowsdesktop.app.ref.9.0.12.nupkg.sha512",
+    "C:\\Users\\talkt\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.12\\microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,9 +1,11 @@
 using QuantityMeasurementModelLayer.Entities;
 
-namespace QuantityMeasurementRepositoryLayer.Interfaces;
-
-public interface IQuantityMeasurementRepository
+namespace QuantityMeasurementRepositoryLayer.Interfaces
 {
-    void Save(QuantityMeasurementEntity entity);
-    List<QuantityMeasurementEntity> GetAll();
+    public interface IQuantityMeasurementRepository
+    {
+        void SaveOperation(QuantityMeasurementEntity entity);
+
+        List<QuantityMeasurementEntity> GetAll();
+    }
 }

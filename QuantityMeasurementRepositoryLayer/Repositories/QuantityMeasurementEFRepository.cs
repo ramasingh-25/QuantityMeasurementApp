@@ -1,42 +1,28 @@
-
+using Microsoft.EntityFrameworkCore;
 using QuantityMeasurementModelLayer.Entities;
 using QuantityMeasurementRepositoryLayer.Context;
 using QuantityMeasurementRepositoryLayer.Interfaces;
- 
-namespace QuantityMeasurementRepositoryLayer.Repositories;
- 
-public class QuantityMeasurementEFRepository : IQuantityMeasurementRepositorySql
+
+namespace QuantityMeasurementRepositoryLayer.Repository
 {
-    private readonly QuantityMeasurementDbContext _context;
- 
-    // DbContext injected by DI
-    public QuantityMeasurementEFRepository(QuantityMeasurementDbContext context)
+    public class QuantityMeasurementEFRepository
     {
-        _context = context;
-    }
- 
-    // Save 
-    // INSERT INTO QuantityMeasurements (Operation, Operand1, Operand2, Result)
-    // VALUES (@Operation, @Operand1, @Operand2, @Result)
-    public void Save(QuantityMeasurementEntity entity)
-    {
-        try
+        private readonly QuantityMeasurementDbContext _context;
+
+        public QuantityMeasurementEFRepository(QuantityMeasurementDbContext context)
         {
-            _context.Measurements.Add(entity);  
-            _context.SaveChanges();              
+            _context = context;
         }
-        catch (Exception ex)
+
+        public void SaveOperation(QuantityMeasurementEntity entity)
         {
-            Console.WriteLine($"Database save error: {ex.Message}");
-            throw;
+            _context.QuantityMeasurements.Add(entity);
+            _context.SaveChanges();
         }
-    }
- 
-    // GetAll
-    // SELECT Operation, Operand1, Operand2, Result FROM QuantityMeasurements
-    public List<QuantityMeasurementEntity> GetAll()
-    {
-        return _context.Measurements.ToList();  
+
+        public List<QuantityMeasurementEntity> GetAll()
+        {
+            return _context.QuantityMeasurements.ToList();
+        }
     }
 }
- 

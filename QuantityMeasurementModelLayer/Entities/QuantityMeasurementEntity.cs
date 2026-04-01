@@ -1,33 +1,26 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuantityMeasurementModelLayer.Entities
 {
-    [Table("QuantityMeasurements")]
     public class QuantityMeasurementEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Operation { get; set; } = string.Empty;
-
         public double FirstValue { get; set; }
-
-        [MaxLength(50)]
-        public string FirstUnit { get; set; } = string.Empty;
-
+        [Required]
+        public string FirstUnit { get; set; } = null!;
+        [Required]
         public double SecondValue { get; set; }
-
-        [MaxLength(50)]
-        public string SecondUnit { get; set; } = string.Empty;
-
+        [Required]
+        public string SecondUnit { get; set; } = null!;
+        [Required]
+        public string Operation { get; set; } = null!;
+        
         public double Result { get; set; }
 
-        [MaxLength(50)]
-        public string MeasurementType { get; set; } = string.Empty;
+        public string MeasurementType { get; set; } = null!;
 
         public QuantityMeasurementEntity() { }
 
@@ -41,12 +34,12 @@ namespace QuantityMeasurementModelLayer.Entities
             string measurementType)
         {
             FirstValue = firstValue;
-            FirstUnit = firstUnit ?? string.Empty;
+            FirstUnit = firstUnit;
             SecondValue = secondValue;
-            SecondUnit = secondUnit ?? string.Empty;
-            Operation = operation ?? string.Empty;
+            SecondUnit = secondUnit;
+            Operation = operation;
             Result = result;
-            MeasurementType = measurementType ?? string.Empty;
+            MeasurementType = measurementType;
         }
     }
 }

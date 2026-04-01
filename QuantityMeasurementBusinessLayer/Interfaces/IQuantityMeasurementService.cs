@@ -1,19 +1,21 @@
- 
 using QuantityMeasurementModelLayer.DTO;
 using QuantityMeasurementModelLayer.Entities;
- 
-namespace QuantityMeasurementBusinessLayer.Interfaces;
- 
-public interface IQuantityMeasurementService
+using QuantityMeasurementModelLayer.Exceptions;
+using System.Collections.Generic;
+
+namespace QuantityMeasurementBusinessLayer.Interfaces
 {
-    bool Compare(QuantityDTO q1, QuantityDTO q2);
-    QuantityDTO Convert(QuantityDTO input, string targetUnit);
-    QuantityDTO Add(QuantityDTO q1, QuantityDTO q2);
-    QuantityDTO Subtract(QuantityDTO q1, QuantityDTO q2);
-    double Divide(QuantityDTO q1, QuantityDTO q2);
-    List<QuantityMeasurementEntity> GetAll();
-    List<QuantityMeasurementEntity> GetCacheHistory();
-    List<QuantityMeasurementEntity> GetRedisHistory();
-    List<QuantityMeasurementEntity> GetSqlHistory();
-    List<QuantityMeasurementEntity> GetEFHistory();
+    public interface IQuantityMeasurementService
+    {
+        double CompareQuantities(QuantityDTO thisQuantity, QuantityDTO thatQuantity);
+        QuantityDTO AddQuantities(QuantityDTO thisQuantity, QuantityDTO thatQuantity);
+         QuantityDTO SubtractQuantities(QuantityDTO thisQuantity, QuantityDTO thatQuantity);
+        QuantityDTO DivideQuantities(QuantityDTO thisQuantity, QuantityDTO thatQuantity);
+        QuantityDTO ConvertQuantity(QuantityDTO quantity, string targetUnit);
+
+        List<QuantityMeasurementEntity> GetErroredOperations();
+        int GetOperationCount(string operationType);
+        void SyncQueueToDatabase();
+        (List<QuantityMeasurementEntity> data, string source) GetAllOperationsWithSource();
+    }
 }

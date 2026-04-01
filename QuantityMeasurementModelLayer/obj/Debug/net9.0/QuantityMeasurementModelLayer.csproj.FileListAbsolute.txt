@@ -1,6 +1,7 @@
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Debug\net9.0\QuantityMeasurementModelLayer.deps.json
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Debug\net9.0\QuantityMeasurementModelLayer.dll
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Debug\net9.0\QuantityMeasurementModelLayer.pdb
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Debug\net9.0\QuantityMeasurementModelLayer.csproj.AssemblyReference.cache
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Debug\net9.0\QuantityMeasurementModelLayer.GeneratedMSBuildEditorConfig.editorconfig
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Debug\net9.0\QuantityMeasurementModelLayer.AssemblyInfoInputs.cache
 D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Debug\net9.0\QuantityMeasurementModelLayer.AssemblyInfo.cs
