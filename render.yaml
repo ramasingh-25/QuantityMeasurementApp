@@ -18,7 +18,7 @@ services:
         value: "YOUR_DATABASE_CONNECTION_STRING_HERE"
 
   # PostgreSQL Database
-  - type: psql
+  - type: postgres
     name: quantity-measurement-db
     plan: free
     ipAllowList: []
