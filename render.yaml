@@ -17,7 +17,7 @@ services:
           property: connectionString
 
   # PostgreSQL Database
-  - type: postgres
+  - type: psql
     name: quantity-measurement-db
     plan: free
     ipAllowList: []
