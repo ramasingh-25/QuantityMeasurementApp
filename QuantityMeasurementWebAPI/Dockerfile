@@ -5,16 +5,12 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copy csproj files and restore dependencies
-COPY ["QuantityMeasurementWebAPI.csproj", "./"]
-COPY ["../QuantityMeasurementBusinessLayer/QuantityMeasurementBusinessLayer.csproj", "../QuantityMeasurementBusinessLayer/"]
-COPY ["../QuantityMeasurementRepositoryLayer/QuantityMeasurementRepositoryLayer.csproj", "../QuantityMeasurementRepositoryLayer/"]
-COPY ["../QuantityMeasurementModelLayer/QuantityMeasurementModelLayer.csproj", "../QuantityMeasurementModelLayer/"]
+# Copy the entire solution to restore all projects
+COPY ../ . .
 RUN dotnet restore "./QuantityMeasurementWebAPI.csproj"
 
-# Copy the rest of the source code
-COPY . .
-WORKDIR "/src/."
+# Build the application
+WORKDIR "/src/QuantityMeasurementWebAPI"
 RUN dotnet build "QuantityMeasurementWebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
