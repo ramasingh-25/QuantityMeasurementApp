@@ -10,11 +10,11 @@ COPY . .
 # Restore the solution
 RUN dotnet restore "QuantityMeasurementApp.sln"
 
-# Build the web API project
-RUN dotnet build "QuantityMeasurementApp.sln" -c Release -p:QuantityMeasurementWebAPI -o /app/build
+# Build the application
+RUN dotnet build "QuantityMeasurementWebAPI/QuantityMeasurementWebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "QuantityMeasurementApp.sln" -c Release -p:QuantityMeasurementWebAPI -o /app/publish
+RUN dotnet publish "QuantityMeasurementWebAPI/QuantityMeasurementWebAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
