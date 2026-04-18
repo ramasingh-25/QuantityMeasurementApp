@@ -5,6 +5,8 @@ services:
     runtime: docker
     plan: free
     region: frankfurt
+    dockerContext: ./QuantityMeasurementWebAPI
+    dockerfilePath: ./QuantityMeasurementWebAPI/Dockerfile
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
