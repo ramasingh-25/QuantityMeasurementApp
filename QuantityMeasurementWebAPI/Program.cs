@@ -113,17 +113,26 @@ builder.Services.AddSwaggerGen(c =>
 // ---------------------- Database ----------------------
 builder.Services.AddDbContext<QuantityMeasurementDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    
     if (builder.Environment.IsDevelopment())
     {
         // Use SQL Server in development
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         options.UseSqlServer(connectionString);
     }
     else
     {
-        // Use PostgreSQL in production (Render)
-        options.UseNpgsql(connectionString);
+        // Use PostgreSQL in production (Render) - use DATABASE_URL
+        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+        if (!string.IsNullOrEmpty(databaseUrl))
+        {
+            options.UseNpgsql(databaseUrl);
+        }
+        else
+        {
+            // Fallback to DefaultConnection if DATABASE_URL is not set
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            options.UseNpgsql(connectionString);
+        }
     }
 });
 
