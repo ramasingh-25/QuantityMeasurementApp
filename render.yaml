@@ -1,0 +1,23 @@
+services:
+  # Web API Service
+  - type: web
+    name: quantity-measurement-api
+    env: csharp
+    plan: free
+    buildCommand: dotnet publish -c Release -o ./publish
+    startCommand: dotnet ./publish/QuantityMeasurementWebAPI.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: JWT__Key
+        generateValue: true
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: quantity-measurement-db
+          property: connectionString
+
+  # PostgreSQL Database
+  - type: postgres
+    name: quantity-measurement-db
+    plan: free
+    ipAllowList: []

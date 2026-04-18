@@ -17,7 +17,7 @@ public class JwtService
         {
             new Claim(JwtRegisteredClaimNames.Sub, email),
             new Claim("userId", userId.ToString()),
-            new Claim(ClaimTypes.Role, role)
+            new Claim("role", role)  // Use simple "role" claim instead of ClaimTypes.Role
         };
 
         var token = new JwtSecurityToken(

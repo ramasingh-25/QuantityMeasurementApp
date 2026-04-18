@@ -348,12 +348,22 @@ public void SyncQueueToDatabase()
 
         public (List<QuantityMeasurementEntity> data, string source) GetAllOperationsWithSource()
         {
-            var cachedData = _cacheRepository.GetCachedData();
-            if (cachedData != null)
-                return (cachedData, "REDIS CACHE");
+            // Check if cache repository is available
+            if (_cacheRepository != null)
+            {
+                var cachedData = _cacheRepository.GetCachedData();
+                if (cachedData != null)
+                    return (cachedData, "REDIS CACHE");
+            }
 
             var data = _dbRepository.GetAll();
-            _cacheRepository.SetCache(data);
+            
+            // Try to set cache if repository is available
+            if (_cacheRepository != null)
+            {
+                _cacheRepository.SetCache(data);
+            }
+            
             return (data, "DATABASE");
         }
     }

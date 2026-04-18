@@ -6,7 +6,7 @@ using QuantityMeasurementModelLayer.Exceptions;
 
 namespace QuantityMeasurementWebAPI.Controllers
 {
-    [Authorize(Roles ="admin,user")]
+    [Authorize(Roles ="admin,user,User,Admin")]
     [ApiController]
     [Route("api/v1/quantities")]
     public class QuantityMeasurementController : ControllerBase

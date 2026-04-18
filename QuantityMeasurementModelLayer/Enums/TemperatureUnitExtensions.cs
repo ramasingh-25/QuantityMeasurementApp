@@ -11,6 +11,9 @@ namespace QuantityMeasurementModelLayer.Enums;
             if (unit == TemperatureUnit.FAHRENHEIT)
                 return (value - 32) * 5 / 9;
 
+            if (unit == TemperatureUnit.KELVIN)
+                return value - 273.15;
+
             throw new ArgumentException("Invalid Temperature Unit");
         }
 
@@ -21,6 +24,9 @@ namespace QuantityMeasurementModelLayer.Enums;
 
             if (unit == TemperatureUnit.FAHRENHEIT)
                 return (baseValue * 9 / 5) + 32;
+
+            if (unit == TemperatureUnit.KELVIN)
+                return baseValue + 273.15;
 
             throw new ArgumentException("Invalid Temperature Unit");
         }

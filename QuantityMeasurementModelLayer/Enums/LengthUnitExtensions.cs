@@ -6,10 +6,12 @@
         {
             switch (unit)
             {
+                case LengthUnit.METER: return 1.0;
+                case LengthUnit.KILOMETER: return 1000.0;
                 case LengthUnit.FEET: return 1.0;
                 case LengthUnit.INCHES: return 1.0 / 12.0;
                 case LengthUnit.YARDS: return 3.0;
-                case LengthUnit.CENTIMETERS: return 1.0 / 30.48;
+                case LengthUnit.CENTIMETERS: return 1.0 / 100.0;
                 default: throw new ArgumentException();
             }
         }

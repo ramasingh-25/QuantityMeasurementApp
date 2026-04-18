@@ -12,6 +12,7 @@ using QuantityMeasurementRepositoryLayer.Repositories;
 using QuantityMeasurementWebAPI.Middleware;
 using QuantityMeasurementWebAPI.Services;
 using System.Security.Claims;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,17 +31,52 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = false,
         ValidateIssuerSigningKey = true,
-          RoleClaimType = ClaimTypes.Role,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        RoleClaimType = ClaimTypes.Role,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "YourSuperSecretKey1234567890123456")
         )
     };
+
+    // For debugging - log authentication events
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine($"Token validated for user: {context.Principal?.Identity?.Name}");
+            return Task.CompletedTask;
+        }
+    };
+});
+
+// CORS - Allow frontend origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            // Allow all origins in development
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+        else
+        {
+            // Allow all origins in production for Render deployment
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+    });
 });
 
 // Authorization
@@ -76,8 +112,20 @@ builder.Services.AddSwaggerGen(c =>
 
 // ---------------------- Database ----------------------
 builder.Services.AddDbContext<QuantityMeasurementDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    
+    if (builder.Environment.IsDevelopment())
+    {
+        // Use SQL Server in development
+        options.UseSqlServer(connectionString);
+    }
+    else
+    {
+        // Use PostgreSQL in production (Render)
+        options.UseNpgsql(connectionString);
+    }
+});
 
 // ---------------------- Dependency Injection ----------------------
 // Repositories
@@ -105,19 +153,24 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<QuantityMeasurementDbContext>();
-    // If QuantityMeasurements already exists but migration not recorded, mark it as applied
-    db.Database.ExecuteSqlRaw("""
-        IF OBJECT_ID('[__EFMigrationsHistory]') IS NULL
-            CREATE TABLE [__EFMigrationsHistory] (
-                [MigrationId] nvarchar(150) NOT NULL,
-                [ProductVersion] nvarchar(32) NOT NULL,
-                CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
-            );
-        IF OBJECT_ID('[QuantityMeasurements]') IS NOT NULL
-            AND NOT EXISTS (SELECT 1 FROM [__EFMigrationsHistory] WHERE [MigrationId] = '20260331094451_InitialCreate')
-            INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-            VALUES ('20260331094451_InitialCreate', '9.0.5');
-        """);
+    
+    if (builder.Environment.IsDevelopment())
+    {
+        // SQL Server specific migration handling
+        db.Database.ExecuteSqlRaw("""
+            IF OBJECT_ID('[__EFMigrationsHistory]') IS NULL
+                CREATE TABLE [__EFMigrationsHistory] (
+                    [MigrationId] nvarchar(150) NOT NULL,
+                    [ProductVersion] nvarchar(32) NOT NULL,
+                    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+                );
+            IF OBJECT_ID('[QuantityMeasurements]') IS NOT NULL
+                AND NOT EXISTS (SELECT 1 FROM [__EFMigrationsHistory] WHERE [MigrationId] = '20260331094451_InitialCreate')
+                INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+                VALUES ('20260331094451_InitialCreate', '9.0.5');
+            """);
+    }
+    
     db.Database.Migrate();
 }
 
@@ -133,6 +186,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
