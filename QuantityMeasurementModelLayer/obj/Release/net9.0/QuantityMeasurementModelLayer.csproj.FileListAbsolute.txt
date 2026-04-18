@@ -1,0 +1,16 @@
+D:\app\build\QuantityMeasurementModelLayer.deps.json
+D:\app\build\QuantityMeasurementModelLayer.dll
+D:\app\build\QuantityMeasurementModelLayer.pdb
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.csproj.AssemblyReference.cache
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.AssemblyInfoInputs.cache
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.AssemblyInfo.cs
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.csproj.CoreCompileInputs.cache
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.sourcelink.json
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.dll
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\refint\QuantityMeasurementModelLayer.dll
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\QuantityMeasurementModelLayer.pdb
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\obj\Release\net9.0\ref\QuantityMeasurementModelLayer.dll
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Release\net9.0\QuantityMeasurementModelLayer.deps.json
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Release\net9.0\QuantityMeasurementModelLayer.dll
+D:\QuantityMeasurementApp\QuantityMeasurementModelLayer\bin\Release\net9.0\QuantityMeasurementModelLayer.pdb
