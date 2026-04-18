@@ -5,16 +5,16 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copy the entire solution to restore all projects
+# Copy the entire solution
 COPY ../ . .
-RUN dotnet restore "./QuantityMeasurementWebAPI.csproj"
+# Restore dependencies
+RUN dotnet restore "./QuantityMeasurementWebAPI/QuantityMeasurementWebAPI.csproj"
 
 # Build the application
-WORKDIR "/src/QuantityMeasurementWebAPI"
-RUN dotnet build "QuantityMeasurementWebAPI.csproj" -c Release -o /app/build
+RUN dotnet build "./QuantityMeasurementWebAPI/QuantityMeasurementWebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "QuantityMeasurementWebAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "./QuantityMeasurementWebAPI/QuantityMeasurementWebAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
