@@ -1,24 +1,39 @@
 services:
-  # Web API Service
+  # Backend API
   - type: web
     name: quantity-measurement-api
-    env: docker
+    runtime: docker
     plan: free
-    repo: https://github.com/ramasingh-25/QuantityMeasurementApp.git
-    rootDir: QuantityMeasurementWebAPI
-    dockerContext: ./QuantityMeasurementWebAPI
-    dockerfilePath: ./QuantityMeasurementWebAPI/Dockerfile
-    healthCheckPath: /health
+    region: frankfurt
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-      - key: JWT__Key
-        generateValue: true
-      - key: ConnectionStrings__DefaultConnection
-        value: "YOUR_DATABASE_CONNECTION_STRING_HERE"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: quantity-db
+          property: connectionString
+      - key: Redis
+        fromService:
+          type: keyvalue
+          name: quantity-cache
+          property: connectionString
 
-  # PostgreSQL Database
-  - type: postgres
-    name: quantity-measurement-db
+  # Managed Redis (Key Value)
+  - type: keyvalue
+    name: quantity-cache
     plan: free
-    ipAllowList: []
+    region: frankfurt
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: allow all
+
+databases:
+  # Managed PostgreSQL
+  - name: quantity-db
+    databaseName: quantity_measurement
+    user: admin
+    plan: free
+    region: frankfurt
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: allow all
