@@ -1,0 +1,24 @@
+services:
+  # Web API Service
+  - type: web
+    name: quantity-measurement-api
+    env: docker
+    plan: free
+    repo: https://github.com/ramasingh-25/QuantityMeasurementApp.git
+    rootDir: QuantityMeasurementWebAPI
+    dockerContext: ./QuantityMeasurementWebAPI
+    dockerfilePath: ./QuantityMeasurementWebAPI/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: JWT__Key
+        generateValue: true
+      - key: ConnectionStrings__DefaultConnection
+        value: "YOUR_DATABASE_CONNECTION_STRING_HERE"
+
+  # PostgreSQL Database
+  - type: psql
+    name: quantity-measurement-db
+    plan: free
+    ipAllowList: []
