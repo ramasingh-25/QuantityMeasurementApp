@@ -14,6 +14,23 @@ using QuantityMeasurementWebAPI.Services;
 using System.Security.Claims;
 using Npgsql;
 
+// Helper method to convert Render's DATABASE_URL to Npgsql connection string
+string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
+{
+    // Render provides DATABASE_URL in format: postgres://user:password@host:port/database
+    if (databaseUrl.StartsWith("postgres://"))
+    {
+        var uri = new Uri(databaseUrl);
+        var userInfo = uri.UserInfo.Split(':');
+        var username = userInfo[0];
+        var password = userInfo.Length > 1 ? userInfo[1] : "";
+        
+        return $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Trim('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    }
+    
+    return databaseUrl; // Return as-is if not in expected format
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ---------------------- Add Services ----------------------
@@ -125,7 +142,9 @@ builder.Services.AddDbContext<QuantityMeasurementDbContext>(options =>
         var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
         if (!string.IsNullOrEmpty(databaseUrl))
         {
-            options.UseNpgsql(databaseUrl);
+            // Convert Render's DATABASE_URL format to Npgsql connection string
+            var connectionString = ConvertRenderDatabaseUrlToNpgsql(databaseUrl);
+            options.UseNpgsql(connectionString);
         }
         else
         {
