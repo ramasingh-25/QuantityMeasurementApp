@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuantityMeasurementModelLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7369af1ce04a2c0c2fa82a590d38fccf79c9f9ef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0b53110a7813829b7d05d8e99535a7127b37166")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuantityMeasurementModelLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuantityMeasurementModelLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

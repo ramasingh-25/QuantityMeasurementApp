@@ -12,12 +12,4 @@ services:
       - key: JWT__Key
         generateValue: true
       - key: ConnectionStrings__DefaultConnection
-        fromDatabase:
-          name: quantity-measurement-db
-          property: connectionString
-
-  # PostgreSQL Database
-  - type: psql
-    name: quantity-measurement-db
-    plan: free
-    ipAllowList: []
+        value: "YOUR_DATABASE_CONNECTION_STRING_HERE"
