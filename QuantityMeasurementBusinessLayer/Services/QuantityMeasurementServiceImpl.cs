@@ -40,7 +40,7 @@ namespace QuantityMeasurementBusinessLayer.Services
     catch (Exception ex)
     {
         Console.WriteLine($"DB FAILED - ADDING TO QUEUE: {ex.Message}");
-        _cacheRepository.AddToQueue(entity);
+        _cacheRepository?.AddToQueue(entity);
     }
 }
 
@@ -49,6 +49,12 @@ namespace QuantityMeasurementBusinessLayer.Services
        
 public void SyncQueueToDatabase()
 {
+    if (_cacheRepository == null)
+    {
+        Console.WriteLine("Cache repository not available");
+        return;
+    }
+
     var queuedEntities = _cacheRepository.GetQueue();
 
     if (queuedEntities.Count == 0)
