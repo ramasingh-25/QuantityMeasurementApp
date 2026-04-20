@@ -212,9 +212,14 @@ using (var scope = app.Services.CreateScope())
                 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
                 VALUES ('20260331094451_InitialCreate', '9.0.5');
             """);
+        
+        db.Database.Migrate();
     }
-    
-    db.Database.Migrate();
+    else
+    {
+        // For PostgreSQL (production), use EnsureCreated to avoid SQL Server migration conflicts
+        db.Database.EnsureCreated();
+    }
 }
 
 // Middleware
