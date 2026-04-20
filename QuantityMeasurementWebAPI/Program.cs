@@ -165,6 +165,9 @@ builder.Services.AddDbContext<QuantityMeasurementDbContext>(options =>
             options.UseNpgsql(connectionString);
         }
     }
+    
+    // Suppress pending model changes warning for production deployment
+    options.ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
 });
 
 // ---------------------- Dependency Injection ----------------------
