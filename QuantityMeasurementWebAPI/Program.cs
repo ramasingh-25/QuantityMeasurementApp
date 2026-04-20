@@ -17,6 +17,8 @@ using Npgsql;
 // Helper method to convert Render's DATABASE_URL to Npgsql connection string
 string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
 {
+    Console.WriteLine($"Converting DATABASE_URL: {databaseUrl}");
+    
     // Render provides DATABASE_URL in format: postgres://user:password@host:port/database
     if (databaseUrl.StartsWith("postgres://"))
     {
@@ -25,9 +27,12 @@ string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
         var username = userInfo[0];
         var password = userInfo.Length > 1 ? userInfo[1] : "";
         
-        return $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Trim('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+        var connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Trim('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+        Console.WriteLine($"Converted connection string: {connectionString}");
+        return connectionString;
     }
     
+    Console.WriteLine("DATABASE_URL doesn't start with postgres://, returning as-is");
     return databaseUrl; // Return as-is if not in expected format
 }
 
@@ -140,16 +145,20 @@ builder.Services.AddDbContext<QuantityMeasurementDbContext>(options =>
     {
         // Use PostgreSQL in production (Render) - use DATABASE_URL
         var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+        Console.WriteLine($"DATABASE_URL environment variable: {databaseUrl}");
+        
         if (!string.IsNullOrEmpty(databaseUrl))
         {
             // Convert Render's DATABASE_URL format to Npgsql connection string
             var connectionString = ConvertRenderDatabaseUrlToNpgsql(databaseUrl);
+            Console.WriteLine($"Using connection string: {connectionString}");
             options.UseNpgsql(connectionString);
         }
         else
         {
             // Fallback to DefaultConnection if DATABASE_URL is not set
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            Console.WriteLine($"DATABASE_URL not found, using DefaultConnection: {connectionString}");
             options.UseNpgsql(connectionString);
         }
     }
