@@ -27,7 +27,10 @@ string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
         var username = userInfo[0];
         var password = userInfo.Length > 1 ? userInfo[1] : "";
         
-        var connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.Trim('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+        // Default to PostgreSQL port 5432 if not specified
+        var port = uri.Port > 0 ? uri.Port : 5432;
+        
+        var connectionString = $"Host={uri.Host};Port={port};Database={uri.AbsolutePath.Trim('/')};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
         Console.WriteLine($"Converted connection string: {connectionString}");
         return connectionString;
     }
