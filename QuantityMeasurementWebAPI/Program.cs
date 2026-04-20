@@ -19,8 +19,8 @@ string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
 {
     Console.WriteLine($"Converting DATABASE_URL: {databaseUrl}");
     
-    // Render provides DATABASE_URL in format: postgres://user:password@host:port/database
-    if (databaseUrl.StartsWith("postgres://"))
+    // Render provides DATABASE_URL in format: postgresql://user:password@host:port/database
+    if (databaseUrl.StartsWith("postgres://") || databaseUrl.StartsWith("postgresql://"))
     {
         var uri = new Uri(databaseUrl);
         var userInfo = uri.UserInfo.Split(':');
@@ -32,7 +32,7 @@ string ConvertRenderDatabaseUrlToNpgsql(string databaseUrl)
         return connectionString;
     }
     
-    Console.WriteLine("DATABASE_URL doesn't start with postgres://, returning as-is");
+    Console.WriteLine("DATABASE_URL doesn't start with postgres:// or postgresql://, returning as-is");
     return databaseUrl; // Return as-is if not in expected format
 }
 
