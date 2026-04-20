@@ -217,7 +217,7 @@ using (var scope = app.Services.CreateScope())
     }
     else
     {
-        // For PostgreSQL (production), use EnsureCreated to avoid SQL Server migration conflicts
+        Console.WriteLine("Production environment detected, using EnsureCreated for PostgreSQL");
         db.Database.EnsureCreated();
     }
 }
