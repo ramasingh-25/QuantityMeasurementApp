@@ -225,6 +225,26 @@ using (var scope = app.Services.CreateScope())
         // For PostgreSQL (production) or when DATABASE_URL is present
         Console.WriteLine("Using EnsureCreated for PostgreSQL");
         db.Database.EnsureCreated();
+        
+        // Manually create Users table if it doesn't exist (EnsureCreated might miss it)
+        try
+        {
+            db.Database.ExecuteSqlRaw("""
+                CREATE TABLE IF NOT EXISTS "Users" (
+                    "Id" SERIAL PRIMARY KEY,
+                    "Name" TEXT NOT NULL,
+                    "Email" TEXT NOT NULL,
+                    "Password" TEXT NOT NULL,
+                    "Role" TEXT
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS "IX_Users_Email" ON "Users" ("Email");
+                """);
+            Console.WriteLine("Users table created or already exists");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating Users table: {ex.Message}");
+        }
     }
 }
 
