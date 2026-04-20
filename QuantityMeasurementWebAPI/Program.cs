@@ -196,10 +196,15 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<QuantityMeasurementDbContext>();
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
     
-    if (builder.Environment.IsDevelopment())
+    Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
+    Console.WriteLine($"DATABASE_URL present: {!string.IsNullOrEmpty(databaseUrl)}");
+    
+    if (builder.Environment.IsDevelopment() && string.IsNullOrEmpty(databaseUrl))
     {
-        // SQL Server specific migration handling
+        // SQL Server specific migration handling for local development
+        Console.WriteLine("Using SQL Server migrations for local development");
         db.Database.ExecuteSqlRaw("""
             IF OBJECT_ID('[__EFMigrationsHistory]') IS NULL
                 CREATE TABLE [__EFMigrationsHistory] (
@@ -217,7 +222,8 @@ using (var scope = app.Services.CreateScope())
     }
     else
     {
-        Console.WriteLine("Production environment detected, using EnsureCreated for PostgreSQL");
+        // For PostgreSQL (production) or when DATABASE_URL is present
+        Console.WriteLine("Using EnsureCreated for PostgreSQL");
         db.Database.EnsureCreated();
     }
 }
